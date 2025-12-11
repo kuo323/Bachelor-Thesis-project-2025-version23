@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Scene_testing.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
-    path: Assets/Scenes/Scene_forest.unity
+    path: Assets/Scenes/Scene_forest_distraction1.unity
     guid: 38bac421d53bab34a9b2e41472b28faf
   - enabled: 1
     path: Assets/Scenes/Scene_spaceship.unity
