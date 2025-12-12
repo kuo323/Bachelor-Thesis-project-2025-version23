@@ -10,6 +10,7 @@ public class DistractionManager2 : MonoBehaviour
     [Header("Movement Bubble")]
     public float minDistance = 0.6f;
     public float maxDistance = 1.6f;
+    public float headTarget = 0.5f;
 
     private enum MoveState { IdleHover, ShortArc, ZigZag, FullOrbit }
     private MoveState state;
@@ -59,8 +60,13 @@ public class DistractionManager2 : MonoBehaviour
         ApplyHoverJitter();
         ApplyTiltJitter();
 
-        // Always look at the user
-        bot.transform.LookAt(head.position + Vector3.up * 0.1f);
+        // Aim 50 cm below the head
+        Vector3 safeTarget = head.position + Vector3.down * headTarget;
+        Vector3 direction = (safeTarget - bot.transform.position).normalized;
+
+        // Keep bat upright
+        Quaternion targetRot = Quaternion.LookRotation(direction, Vector3.up);
+        bot.transform.rotation = targetRot;
     }
 
     public void PickNewState()
