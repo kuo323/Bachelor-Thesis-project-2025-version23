@@ -12,6 +12,19 @@ public class DistractionManager2 : MonoBehaviour
     public float maxDistance = 1.6f;
     public float headTarget = 0.5f;
 
+
+    [Header("Movement Speeds")]
+    public float baseMoveSpeed = 2.5f;
+    public float idleSpeedMultiplier = 0.5f;
+    public float arcSpeedMultiplier = 1.0f;
+    public float zigZagSpeedMultiplier = 1.5f;
+    public float orbitSpeedMultiplier = 1.0f;
+
+    [Header("Height Limits (relative to head)")]
+    public float minHeight = -0.3f;   // below head (meters)
+    public float maxHeight = 0.8f;    // above head (meters)
+
+
     private enum MoveState { IdleHover, ShortArc, ZigZag, FullOrbit }
     private MoveState state;
 
@@ -60,6 +73,8 @@ public class DistractionManager2 : MonoBehaviour
         ApplyHoverJitter();
         ApplyTiltJitter();
 
+        ClampHeight();
+
         // Aim 50 cm below the head
         Vector3 safeTarget = head.position + Vector3.down * headTarget;
         Vector3 direction = (safeTarget - bot.transform.position).normalized;
@@ -67,6 +82,10 @@ public class DistractionManager2 : MonoBehaviour
         // Keep bat upright
         Quaternion targetRot = Quaternion.LookRotation(direction, Vector3.up);
         bot.transform.rotation = targetRot;
+
+        
+
+
     }
 
     public void PickNewState()
@@ -110,14 +129,14 @@ public class DistractionManager2 : MonoBehaviour
 
     void UpdateIdle()
     {
-        MoveBot(bot.transform.position, 2f);
+        MoveBot(bot.transform.position, idleSpeedMultiplier);
     }
 
     void UpdateShortArc()
     {
         currentAngle = Mathf.Lerp(currentAngle, targetAngle, Time.deltaTime * 1.2f);
         Vector3 pos = PolarToPosition(currentAngle, distance);
-        MoveBot(pos, 4f);
+        MoveBot(pos, arcSpeedMultiplier);
     }
 
     void UpdateZigZag()
@@ -128,20 +147,52 @@ public class DistractionManager2 : MonoBehaviour
             0
         );
 
-        MoveBot(zigTarget, 6f);
+        MoveBot(zigTarget, zigZagSpeedMultiplier);
     }
 
     void UpdateFullOrbit()
     {
         currentAngle += 60f * Time.deltaTime;
         Vector3 pos = PolarToPosition(currentAngle, distance);
-        MoveBot(pos, 4f);
+        MoveBot(pos, orbitSpeedMultiplier);
     }
 
-    void MoveBot(Vector3 target, float speed)
+
+    /// <summary>
+    /// /this function controls of the moving speed
+    /// </summary>
+    /// 
+
+    public float acceleration = 5f;
+    private float currentSpeed;
+
+    void MoveBot(Vector3 target, float speedMultiplier)
     {
-        bot.transform.position = Vector3.Lerp(bot.transform.position, target, Time.deltaTime * speed);
+        float speed = baseMoveSpeed * speedMultiplier;
+        currentSpeed = Mathf.Lerp(currentSpeed, speed,Time.deltaTime * acceleration);
+
+        bot.transform.position = Vector3.MoveTowards(
+            bot.transform.position,
+            target,
+            currentSpeed * Time.deltaTime
+        );
     }
+
+    /// <summary>
+    /// /this function controls of height of the movement
+    /// </summary>
+    /// 
+    void ClampHeight()
+    {
+        Vector3 p = bot.transform.position;
+        float minY = head.position.y + minHeight;
+        float maxY = head.position.y + maxHeight;
+
+        p.y = Mathf.Clamp(p.y, minY, maxY);
+        bot.transform.position = p;
+    }
+
+
 
     // ---------------------------
     // ALWAYS-ON JITTER FUNCTIONS

@@ -10571,15 +10571,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistractionPrefab: {fileID: 1000012081666484, guid: a300b93764f24c94b9ddb3445d906548, type: 3}
-  minDistance: 0.6
-  maxDistance: 1.6
+  minDistance: 1.2
+  maxDistance: 2
   headTarget: 0.5
+  baseMoveSpeed: 2.5
+  idleSpeedMultiplier: 0.8
+  arcSpeedMultiplier: 1.5
+  zigZagSpeedMultiplier: 1.5
+  orbitSpeedMultiplier: 1.3
   stateTimeRange:
     min: 0.4
     max: 1
   idleTimeRange:
     min: 0.3
     max: 0.4
+  acceleration: 5
 --- !u!4 &172044313
 Transform:
   m_ObjectHideFlags: 0
