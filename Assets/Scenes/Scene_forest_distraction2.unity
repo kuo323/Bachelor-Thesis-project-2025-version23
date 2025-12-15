@@ -9536,6 +9536,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlanarHologram 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3477599853816937883, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477599853816937883, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
+      propertyPath: m_TagString
+      value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 5159516687054182295, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8321280428039233278, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.03757068
@@ -9591,13 +9603,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3477599853816937883, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 119752716}
   m_SourcePrefab: {fileID: 100100000, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
 --- !u!4 &119752714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8321280428039233278, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
   m_PrefabInstance: {fileID: 119752713}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &119752715 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3477599853816937883, guid: 9bf365cfadc61c94daf98379f9c3e82d, type: 3}
+  m_PrefabInstance: {fileID: 119752713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &119752716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119752715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e03fdf956e180547ae7f289874bfb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationGainController: {fileID: 1869751972}
 --- !u!1001 &127601157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10579,6 +10612,8 @@ MonoBehaviour:
   arcSpeedMultiplier: 1.5
   zigZagSpeedMultiplier: 1.5
   orbitSpeedMultiplier: 1.3
+  minHeight: -0.3
+  maxHeight: 0.8
   stateTimeRange:
     min: 0.4
     max: 1
@@ -75373,6 +75408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1869751974}
   - component: {fileID: 1869751973}
+  - component: {fileID: 1869751976}
   - component: {fileID: 1869751972}
   - component: {fileID: 1869751975}
   m_Layer: 0
@@ -75531,6 +75567,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1869751976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869751971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073118aead6fd0f4babb27756133cd75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shield: {fileID: 119752715}
 --- !u!1 &1869957719
 GameObject:
   m_ObjectHideFlags: 0
