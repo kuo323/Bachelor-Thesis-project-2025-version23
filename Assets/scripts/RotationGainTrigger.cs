@@ -16,10 +16,14 @@ public class RotationGainTrigger : MonoBehaviour
 
         if (!gainController.isRedirecting && !clusterSpawnedOnce)
         {
-         //   gainController.StartRedirection();
+         
 
-            distractionManager.SpawnCluster();
-            distractionManager2.PickNewState();
+          //  distractionManager.SpawnCluster();
+
+            // Spawn 1 meter in front of the player's head
+            Vector3 spawnPos = CameraManager.Instance.head.position + CameraManager.Instance.head.forward * 1f;
+            distractionManager2.SpawnBot(spawnPos);
+
             clusterSpawnedOnce = true;
 
             Debug.Log("➡ User entered trigger zone: rotation gain started & cluster spawned once.");

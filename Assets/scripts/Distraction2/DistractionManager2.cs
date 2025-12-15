@@ -7,10 +7,15 @@ public class DistractionManager2 : MonoBehaviour
 
     private Transform head;
 
+    private Quaternion baseRotation;
+
     [Header("Movement Bubble")]
     public float minDistance = 0.6f;
     public float maxDistance = 1.6f;
-    public float headTarget = 0.5f;
+
+
+    [HideInInspector]
+    public float headTarget;
 
 
     [Header("Movement Speeds")]
@@ -48,9 +53,7 @@ public class DistractionManager2 : MonoBehaviour
     void Start()
     {
         head = CameraManager.Instance.head;
-        bot = Instantiate(DistractionPrefab);
-
-      
+       
     }
 
     void Update()
@@ -79,18 +82,34 @@ public class DistractionManager2 : MonoBehaviour
         Vector3 safeTarget = head.position + Vector3.down * headTarget;
         Vector3 direction = (safeTarget - bot.transform.position).normalized;
 
-        // Keep bat upright
-        Quaternion targetRot = Quaternion.LookRotation(direction, Vector3.up);
-        bot.transform.rotation = targetRot;
 
-        
+        baseRotation = Quaternion.LookRotation(direction, Vector3.up);
+        bot.transform.rotation = baseRotation;
+
 
 
     }
 
+    /// <summary>
+    /// Spawn the prefab object
+    /// </summary>
+ 
+    public void SpawnBot(Vector3 spawnPosition)
+    {
+        if (bot == null)
+        {
+            bot = Instantiate(DistractionPrefab, spawnPosition, Quaternion.identity);
+            PickNewState();  // Initialize state and timers
+            headTarget = Random.Range(0.2f, 1.0f);
+        }
+    }
+
+
     public void PickNewState()
     {
         float roll = Random.value;
+
+        currentSpeed = 0f;
 
         // FIXED incorrect logic ordering
         if (roll < 0.30f)
@@ -211,13 +230,12 @@ public class DistractionManager2 : MonoBehaviour
 
     void ApplyTiltJitter()
     {
-        Vector3 tilt = new Vector3(
-            Mathf.Sin(Time.time * 2f) * 3f,
-            Mathf.Cos(Time.time * 3f) * 2f,
-            Mathf.Sin(Time.time * 1.5f) * 2f
-        );
-
-        bot.transform.localRotation *= Quaternion.Euler(tilt * Time.deltaTime);
+        bot.transform.rotation = baseRotation *
+     Quaternion.Euler(
+         Mathf.Sin(Time.time * 2f) * 3f,
+         Mathf.Cos(Time.time * 3f) * 2f,
+         Mathf.Sin(Time.time * 1.5f) * 2f
+     );
     }
 
     Vector3 PolarToPosition(float angle, float distance)
