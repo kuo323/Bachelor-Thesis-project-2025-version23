@@ -88,7 +88,7 @@ public class OrbAbsorb : MonoBehaviour
         {
 
             // Trigger rotation burst only when pressing trigger
-            rotationGainController.StartRedirection();
+         //   rotationGainController.StartRedirection();
 
             distractionManager?.afterHit();
 

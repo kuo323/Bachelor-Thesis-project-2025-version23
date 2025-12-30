@@ -6,6 +6,9 @@ using UnityEngine;
 public class RotationGainController : MonoBehaviour
 {
     public DistractionManager distractionController;
+
+
+    private LaserRayCast activeLaser;
     public GameObject psObject;
     public GameObject arrowUI;
 
@@ -84,16 +87,19 @@ public class RotationGainController : MonoBehaviour
             DisableParticleObject();
             EnableArrow();
             EnableDoorOpen();
+            DisableLaserBeam();
 
 
             Debug.Log("🎉 90° rotation achieved — redirection completed.");
         }
     }
 
-    public void StartRedirection()
+    public void StartRedirection(LaserRayCast laser)
     {
         if (hasRotatedOnce) return;
 
+
+        activeLaser = laser;
         gainDuration = burstDuration;
         lastHeadYaw = head.eulerAngles.y;
         isRedirecting = true;
@@ -116,7 +122,16 @@ public class RotationGainController : MonoBehaviour
         enableDoor = true;
     }
 
+    void DisableLaserBeam()
+    {
 
+        if (activeLaser != null)
+        {
+            activeLaser.DisableLaser();
+            activeLaser = null; // optional safety clear
+        }
+
+    }
 
 }
 

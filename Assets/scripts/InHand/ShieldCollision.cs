@@ -6,8 +6,11 @@ public class ShieldCollision : MonoBehaviour
 
     public RotationGainController rotationGainController;
 
-    public void OnLaserHit()
+    public void OnLaserHit(LaserRayCast laser)
     {
-        rotationGainController?.StartRedirection();
+        rotationGainController?.StartRedirection(laser);
     }
+
+ 
+
 }

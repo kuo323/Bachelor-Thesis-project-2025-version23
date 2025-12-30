@@ -105,6 +105,18 @@ public class DistractionManager2 : MonoBehaviour
     }
 
 
+
+    public void DisableBot()
+    {
+        if(bot != null)
+        {
+
+            bot.SetActive(false);  // disables the GameObject
+        }
+    }
+
+
+
     public void PickNewState()
     {
         float roll = Random.value;
